@@ -89,8 +89,8 @@ int main(int argc, const char *argv[])
     
     printf("hash_function space_size value initial_state hash_key\n");
     for (uint32_t i = 0; i < NO_KEYS; ++i) {
-        uint32_t val = val_sampler(i);
-        uint32_t key = hash_function(initial_state, val) & (VALUE_SPACE_SIZE-1); // mask to get into right space
+        uint32_t val = val_sampler(i) % VALUE_SPACE_SIZE;
+        uint32_t key = hash_function(initial_state, val) % VALUE_SPACE_SIZE;
         
         printf("%s %d %u %d %u\n",
                hash_name, VALUE_SPACE_SIZE,

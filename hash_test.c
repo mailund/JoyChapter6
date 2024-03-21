@@ -92,10 +92,8 @@ int main(int argc, const char *argv[])
     }
     
     for (uint32_t i = 0; i < NO_KEYS; ++i) {
-        uint32_t val = val_sampler(i);
-        uint32_t key = hash_function(initial_state, val) & (VALUE_SPACE_SIZE-1); // mask to get into right space
-        
-        assert(val < VALUE_SPACE_SIZE);
+        uint32_t val = val_sampler(i) % VALUE_SPACE_SIZE;
+        uint32_t key = hash_function(initial_state, val) % VALUE_SPACE_SIZE; // mask to get into right space
         keys_bitvector[key] = values[val] = 1;
         keys[i] = key;
         
@@ -111,5 +109,6 @@ int main(int argc, const char *argv[])
     print_distribution(16, 17, keys, sizeof(keys)/sizeof(uint32_t));
     print_distribution(32, 31, keys, sizeof(keys)/sizeof(uint32_t));
     print_distribution(64, 67, keys, sizeof(keys)/sizeof(uint32_t));
-    return EXIT_SUCCESS;
+
+    return 0;
 }
